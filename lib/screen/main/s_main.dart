@@ -1,3 +1,4 @@
+import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:fast_app_base/screen/main/tab/tab_item.dart';
 import 'package:fast_app_base/screen/main/tab/tab_navigator.dart';
 import 'package:flutter/material.dart';
@@ -48,6 +49,10 @@ class MainScreenState extends State<MainScreen>
             bottom: !extendBody,
             child: pages,
           ),
+        ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {},
+          child: const Icon(EvaIcons.plus),
         ),
         bottomNavigationBar: _buildBottomNavigationBar(context),
       ),
