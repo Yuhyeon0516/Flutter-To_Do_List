@@ -1,5 +1,7 @@
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:fast_app_base/common/dart/extension/datetime_extension.dart';
+import 'package:fast_app_base/data/memory/to_do_data_holder.dart';
+import 'package:fast_app_base/data/memory/vo_to_do.dart';
 import 'package:fast_app_base/screen/main/tab/tab_item.dart';
 import 'package:fast_app_base/screen/main/tab/tab_navigator.dart';
 import 'package:fast_app_base/screen/main/write/d_write_to_do.dart';
@@ -57,8 +59,12 @@ class MainScreenState extends State<MainScreen>
             final result = await WriteToDoDialog().show();
 
             if (result != null) {
-              debugPrint(result.text);
-              debugPrint(result.dateTime.formattedDate);
+              ToDoDataHolder.of(context).notifier.addToDo(
+                    ToDo(
+                        id: DateTime.now().millisecondsSinceEpoch,
+                        title: result.text,
+                        dueDate: result.dateTime),
+                  );
             }
           },
           child: const Icon(EvaIcons.plus),
