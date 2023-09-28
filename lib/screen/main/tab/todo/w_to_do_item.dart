@@ -2,22 +2,21 @@ import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:fast_app_base/common/common.dart';
 import 'package:fast_app_base/common/dart/extension/datetime_extension.dart';
 import 'package:fast_app_base/common/widget/w_rounded_container.dart';
-import 'package:fast_app_base/data/memory/to_do_data_holder.dart';
 import 'package:fast_app_base/data/memory/vo_to_do.dart';
 import 'package:fast_app_base/screen/main/tab/todo/w_to_do_status.dart';
 import 'package:flutter/material.dart';
 
-class ToDoItem extends StatelessWidget with ToDoDataProvider {
+class ToDoItem extends StatelessWidget {
   final ToDo toDo;
 
-  ToDoItem(this.toDo, {super.key});
+  const ToDoItem(this.toDo, {super.key});
 
   @override
   Widget build(BuildContext context) {
     return Dismissible(
       key: ValueKey(toDo.id),
       onDismissed: (direction) {
-        toDoData.removeToDo(toDo);
+        context.readToDoCubit.removeToDo(toDo);
       },
       background: RoundedContainer(
         color: context.appColors.removeToDoBG,
@@ -58,7 +57,7 @@ class ToDoItem extends StatelessWidget with ToDoDataProvider {
                 Expanded(child: toDo.title.text.size(20).medium.make()),
                 IconButton(
                   onPressed: () async {
-                    toDoData.editToDo(toDo);
+                    context.readToDoCubit.editToDo(toDo);
                   },
                   icon: const Icon(EvaIcons.editOutline),
                 )
