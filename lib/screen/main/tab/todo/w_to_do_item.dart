@@ -13,27 +13,59 @@ class ToDoItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return RoundedContainer(
-      margin: const EdgeInsets.only(bottom: 15),
-      color: context.appColors.itemBackground,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.end,
-        children: [
-          toDo.dueDate.relativeDays.text.make(),
-          Row(
-            children: [
-              ToDoStatusWidget(toDo),
-              Expanded(child: toDo.title.text.size(20).medium.make()),
-              IconButton(
-                onPressed: () async {
-                  context.toDoHolder.editToDo(toDo);
-                },
-                icon: const Icon(EvaIcons.editOutline),
-              )
-            ],
-          ),
-        ],
-      ).pOnly(top: 15, right: 15, left: 5, bottom: 10),
+    return Dismissible(
+      key: ValueKey(toDo.id),
+      onDismissed: (direction) {
+        context.toDoHolder.removeToDo(toDo);
+      },
+      background: RoundedContainer(
+        color: context.appColors.removeToDoBG,
+        child: const Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Width(20),
+            Icon(
+              EvaIcons.trash2Outline,
+              color: Colors.white,
+            ),
+          ],
+        ),
+      ),
+      secondaryBackground: RoundedContainer(
+        color: context.appColors.removeToDoBG,
+        child: const Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            Icon(
+              EvaIcons.trash2Outline,
+              color: Colors.white,
+            ),
+            Width(20),
+          ],
+        ),
+      ),
+      child: RoundedContainer(
+        margin: const EdgeInsets.only(bottom: 15),
+        color: context.appColors.itemBackground,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            toDo.dueDate.relativeDays.text.make(),
+            Row(
+              children: [
+                ToDoStatusWidget(toDo),
+                Expanded(child: toDo.title.text.size(20).medium.make()),
+                IconButton(
+                  onPressed: () async {
+                    context.toDoHolder.editToDo(toDo);
+                  },
+                  icon: const Icon(EvaIcons.editOutline),
+                )
+              ],
+            ),
+          ],
+        ).pOnly(top: 15, right: 15, left: 5, bottom: 10),
+      ),
     );
   }
 }

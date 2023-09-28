@@ -69,4 +69,9 @@ class ToDoDataHolder extends InheritedWidget {
       notifier.notify();
     }
   }
+
+  void removeToDo(ToDo toDo) {
+    notifier.value.remove(toDo);
+    notifier.notify();
+  }
 }
