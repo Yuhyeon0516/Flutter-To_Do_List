@@ -1,4 +1,5 @@
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
+import 'package:fast_app_base/common/dart/extension/color_extension.dart';
 import 'package:fast_app_base/common/dart/extension/datetime_extension.dart';
 import 'package:fast_app_base/data/memory/to_do_data_holder.dart';
 import 'package:fast_app_base/data/memory/vo_to_do.dart';
@@ -46,7 +47,7 @@ class MainScreenState extends State<MainScreen>
         extendBody: extendBody, //bottomNavigationBar 아래 영역 까지 그림
         drawer: const MenuDrawer(),
         body: Container(
-          color: context.appColors.seedColor.getMaterialColorValues[200],
+          color: context.appColors.seedColor.getSwatchByBrightness(100),
           padding: EdgeInsets.only(
               bottom: extendBody ? 60 - bottomNavigationBarBorderRadius : 0),
           child: SafeArea(
