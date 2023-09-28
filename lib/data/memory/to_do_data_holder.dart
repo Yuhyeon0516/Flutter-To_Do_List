@@ -59,4 +59,14 @@ class ToDoDataHolder extends InheritedWidget {
       );
     }
   }
+
+  void editToDo(ToDo toDo) async {
+    final result = await WriteToDoDialog(toDoForEdit: toDo).show();
+
+    if (result != null) {
+      toDo.title = result.text;
+      toDo.dueDate = result.dateTime;
+      notifier.notify();
+    }
+  }
 }

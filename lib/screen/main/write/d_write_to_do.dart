@@ -4,12 +4,15 @@ import 'package:fast_app_base/common/util/app_keyboard_util.dart';
 import 'package:fast_app_base/common/widget/scaffold/bottom_dialog_scaffold.dart';
 import 'package:fast_app_base/common/widget/w_round_button.dart';
 import 'package:fast_app_base/common/widget/w_rounded_container.dart';
+import 'package:fast_app_base/data/memory/vo_to_do.dart';
 import 'package:fast_app_base/screen/main/write/vo_write_to_do_result.dart';
 import 'package:flutter/material.dart';
 import 'package:nav/dialog/dialog.dart';
 
 class WriteToDoDialog extends DialogWidget<WriteToDoResult> {
-  WriteToDoDialog({super.key});
+  final ToDo? toDoForEdit;
+
+  WriteToDoDialog({super.key, this.toDoForEdit});
 
   @override
   DialogState<WriteToDoDialog> createState() => _WriteToDoDialogState();
@@ -20,6 +23,15 @@ class _WriteToDoDialogState extends DialogState<WriteToDoDialog>
   DateTime _selectedDate = DateTime.now();
   final textController = TextEditingController();
   final node = FocusNode();
+
+  @override
+  void initState() {
+    if (widget.toDoForEdit != null) {
+      _selectedDate = widget.toDoForEdit!.dueDate;
+      textController.text = widget.toDoForEdit!.title;
+    }
+    super.initState();
+  }
 
   @override
   FutureOr<void> afterFirstLayout(BuildContext context) {
@@ -54,7 +66,7 @@ class _WriteToDoDialogState extends DialogState<WriteToDoDialog>
                   ),
                 ),
                 RoundButton(
-                  text: '추가',
+                  text: isEditMoe ? "수정" : "추가",
                   onTap: () {
                     widget.hide(
                         WriteToDoResult(_selectedDate, textController.text));
@@ -68,6 +80,8 @@ class _WriteToDoDialogState extends DialogState<WriteToDoDialog>
       ),
     );
   }
+
+  bool get isEditMoe => widget.toDoForEdit != null;
 
   void _selectCalendar() async {
     final date = await showDatePicker(
