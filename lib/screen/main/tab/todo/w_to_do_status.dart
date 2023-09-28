@@ -8,13 +8,18 @@ class ToDoStatusWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: 50,
-      height: 50,
-      child: Checkbox(
-        value: true,
-        onChanged: null,
-        fillColor: MaterialStateProperty.all(context.appColors.checkBoxColor),
+    return Tap(
+      onTap: () {
+        context.toDoHolder.changeToDoStatus(toDo);
+      },
+      child: SizedBox(
+        width: 50,
+        height: 50,
+        child: Checkbox(
+          value: true,
+          onChanged: null,
+          fillColor: MaterialStateProperty.all(context.appColors.checkBoxColor),
+        ),
       ),
     );
   }
