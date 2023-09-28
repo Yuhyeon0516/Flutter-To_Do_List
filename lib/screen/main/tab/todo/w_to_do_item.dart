@@ -25,7 +25,9 @@ class ToDoItem extends StatelessWidget {
               ToDoStatusWidget(toDo),
               Expanded(child: toDo.title.text.size(20).medium.make()),
               IconButton(
-                onPressed: () async {},
+                onPressed: () async {
+                  context.toDoHolder.editToDo(toDo);
+                },
                 icon: const Icon(EvaIcons.editOutline),
               )
             ],
