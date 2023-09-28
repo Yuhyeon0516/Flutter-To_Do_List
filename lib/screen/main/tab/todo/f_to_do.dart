@@ -24,7 +24,7 @@ class _ToDoFragmentState extends State<ToDoFragment> {
                   icon: const Icon(Icons.menu))
             ],
           ),
-          Expanded(child: const ToDoList().pSymmetric(h: 15))
+          Expanded(child: ToDoList().pSymmetric(h: 15))
         ],
       ),
     );

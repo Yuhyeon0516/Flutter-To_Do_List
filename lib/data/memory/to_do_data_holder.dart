@@ -1,30 +1,11 @@
-import 'package:fast_app_base/data/memory/to_do_data_notifier.dart';
 import 'package:fast_app_base/data/memory/to_do_status.dart';
 import 'package:fast_app_base/data/memory/vo_to_do.dart';
 import 'package:fast_app_base/screen/dialog/d_confirm.dart';
 import 'package:fast_app_base/screen/main/write/d_write_to_do.dart';
-import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
-class ToDoDataHolder extends InheritedWidget {
-  final ToDoDataNotifier notifier;
-
-  const ToDoDataHolder({
-    super.key,
-    required super.child,
-    required this.notifier,
-  });
-
-  @override
-  bool updateShouldNotify(covariant InheritedWidget oldWidget) {
-    return true;
-  }
-
-  static ToDoDataHolder of(BuildContext context) {
-    ToDoDataHolder inherited =
-        (context.dependOnInheritedWidgetOfExactType<ToDoDataHolder>())!;
-
-    return inherited;
-  }
+class ToDoDataHolder extends GetxController {
+  final RxList<ToDo> toDoList = <ToDo>[].obs;
 
   void changeToDoStatus(ToDo toDo) async {
     switch (toDo.status) {
@@ -43,15 +24,14 @@ class ToDoDataHolder extends InheritedWidget {
       default:
         break;
     }
-
-    notifier.notify();
+    toDoList.refresh();
   }
 
   void addToDo() async {
     final result = await WriteToDoDialog().show();
 
     if (result != null) {
-      notifier.addToDo(
+      toDoList.add(
         ToDo(
             id: DateTime.now().millisecondsSinceEpoch,
             title: result.text,
@@ -66,12 +46,16 @@ class ToDoDataHolder extends InheritedWidget {
     if (result != null) {
       toDo.title = result.text;
       toDo.dueDate = result.dateTime;
-      notifier.notify();
+      toDoList.refresh();
     }
   }
 
   void removeToDo(ToDo toDo) {
-    notifier.value.remove(toDo);
-    notifier.notify();
+    toDoList.remove(toDo);
+    toDoList.refresh();
   }
+}
+
+mixin class ToDoDataProvider {
+  late final ToDoDataHolder toDoData = Get.find();
 }
