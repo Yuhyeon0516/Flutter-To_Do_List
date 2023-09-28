@@ -2,6 +2,7 @@ import 'package:fast_app_base/data/memory/to_do_data_notifier.dart';
 import 'package:fast_app_base/data/memory/to_do_status.dart';
 import 'package:fast_app_base/data/memory/vo_to_do.dart';
 import 'package:fast_app_base/screen/dialog/d_confirm.dart';
+import 'package:fast_app_base/screen/main/write/d_write_to_do.dart';
 import 'package:flutter/material.dart';
 
 class ToDoDataHolder extends InheritedWidget {
@@ -44,5 +45,18 @@ class ToDoDataHolder extends InheritedWidget {
     }
 
     notifier.notify();
+  }
+
+  void addToDo() async {
+    final result = await WriteToDoDialog().show();
+
+    if (result != null) {
+      notifier.addToDo(
+        ToDo(
+            id: DateTime.now().millisecondsSinceEpoch,
+            title: result.text,
+            dueDate: result.dateTime),
+      );
+    }
   }
 }

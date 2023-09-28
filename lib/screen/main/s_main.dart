@@ -1,9 +1,7 @@
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:fast_app_base/common/dart/extension/color_extension.dart';
-import 'package:fast_app_base/data/memory/vo_to_do.dart';
 import 'package:fast_app_base/screen/main/tab/tab_item.dart';
 import 'package:fast_app_base/screen/main/tab/tab_navigator.dart';
-import 'package:fast_app_base/screen/main/write/d_write_to_do.dart';
 import 'package:flutter/material.dart';
 
 import '../../common/common.dart';
@@ -55,16 +53,7 @@ class MainScreenState extends State<MainScreen>
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: () async {
-            final result = await WriteToDoDialog().show();
-
-            if (result != null && mounted) {
-              context.toDoHolder.notifier.addToDo(
-                ToDo(
-                    id: DateTime.now().millisecondsSinceEpoch,
-                    title: result.text,
-                    dueDate: result.dateTime),
-              );
-            }
+            context.toDoHolder.addToDo();
           },
           child: const Icon(EvaIcons.plus),
         ),
